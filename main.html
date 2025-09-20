@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About me</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap');
+        body {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Fira Mono', monospace;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .terminal {
+            background: #23272e;
+            border-radius: 8px;
+            box-shadow: 0 4px 24px #000a;
+            padding: 2rem 3rem;
+            width: 100%;
+            position: relative;
+        }
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            border-bottom: 2px solid #333;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #181818;
+            border: 3px solid #4ec9b0;
+            object-fit: cover;
+            box-shadow: 0 2px 12px #0007;
+        }
+        .about-me {
+            flex: 1;
+            background: #181818;
+            border-radius: 6px;
+            padding: 1rem;
+            color: #9cdcfe;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .about-me strong {
+            color: #4ec9b0;
+        }
+        .info-list {
+            margin: 1rem 0 0 0;
+            padding: 0;
+            list-style: none;
+        }
+        .info-list li {
+            margin-bottom: 0.5rem;
+        }
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .skill {
+            background: #23272e;
+            color: #b5cea8;
+            border-radius: 3px;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+            border: 1px solid #333;
+        }
+        .nav-tabs {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #333;
+        }
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: #d4d4d4;
+            border-radius: 6px 6px 0 0;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav-tab.active, .nav-tab:hover {
+            background: #181818;
+            color: #4ec9b0;
+            border-bottom: 2px solid #4ec9b0;
+        }
+        .section-box {
+            background: #181818;
+            border-radius: 6px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid #333;
+            display: none;
+        }
+        .section-box.active {
+            display: block;
+        }
+        .projects-list, .hobbies-list {
+            list-style: disc inside;
+            margin: 0.5rem 0 0 1rem;
+            color: #b5cea8;
+        }
+        .contact-info {
+            color: #dcdcaa;
+        }
+        .code {
+            background: #181818;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            color: #dcdcaa;
+            margin-bottom: 1rem;
+            white-space: pre-line;
+            transition: background 0.3s;
+        }
+        .code:hover {
+            background: #23272e;
+        }
+        .btn {
+            background: #007acc;
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 1rem;
+        }
+        .btn:hover {
+            background: #005a9e;
+        }
+        .output {
+            color: #b5cea8;
+            margin-top: 1rem;
+            min-height: 1.5em;
+            font-size: 1.1rem;
+        }
+        .main-navbar {
+            width: 100%;
+            background: #23272e;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px #0003;
+        }
+        .main-navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .main-navbar li {
+            margin: 0;
+        }
+        .main-navbar a {
+            display: block;
+            padding: 1rem 2rem;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.15rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .main-navbar a.active,
+        .main-navbar a:hover:not(.feedback) {
+            background: #181818;
+            color: #4ec9b0;
+        }
+        .main-navbar a.feedback {
+            background: #19c37d;
+            color: #fff;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .main-navbar a.feedback:hover {
+            background: #13a06b;
+        }
+        /* Social icons and footer */
+        .footer {
+            width: 100%;
+            background: #23272e;
+            margin-top: 2rem;
+            box-shadow: 0 -2px 8px #0003;
+            padding: 1rem 0;
+        }
+        .footer .inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            color: #d4d4d4;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #181818;
+            border: 1px solid #333;
+            color: #fff;
+            text-decoration: none;
+            transition: transform 0.15s ease, background 0.2s, border-color 0.2s;
+        }
+        .social-icons a:hover {
+            transform: translateY(-2px);
+            background: #2a2f38;
+            border-color: #4ec9b0;
+        }
+        .legal-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .legal-links a {
+            color: #9cdcfe;
+            text-decoration: none;
+        }
+        .legal-links a:hover {
+            color: #4ec9b0;
+            text-decoration: underline;
+        }
+        @media (max-width: 900px) {
+            .container { max-width: 98vw; }
+            .terminal { padding: 1rem; }
+            .profile-section { flex-direction: column; gap: 1rem; }
+            .main-navbar a { padding: 1rem 1rem; font-size: 1rem; }
+        }
+        @media (max-width: 600px) {
+            .terminal { padding: 0.5rem; }
+            h1 { font-size: 1.3rem; }
+            .profile-pic { width: 80px; height: 80px; }
+            .main-navbar ul { flex-direction: column; }
+            .main-navbar a { padding: 0.8rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar Start -->
+    <nav class="main-navbar">
+        <ul>
+            <li><a href="Home.html" class="active">Home</a></li>
+            <li><a href="mygallery.html">My Gallery</a></li>
+            <li><a href="mybusiness.html">My Business</a></li>
+            <li><a href="myblog.html">Blog</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="feedback.html" class="feedback">Feedback</a></li>
+        </ul>
+    </nav>
+    <!-- Navigation Bar End -->
+    <div class="container">
+        <div class="terminal">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <div class="profile-section">
+                <img src="profile.jpg" alt="Profile Picture" class="profile-pic" id="profilePic" onerror="this.src='https://via.placeholder.com/120x120?text=No+Image';">
+                <div class="about-me">
+                    <ul class="info-list">
+                        <li><strong>About Me:</strong> I am a passionate programmer who loves solving problems and building creative projects.</li>
+                        <li><strong>Years of Experience:</strong> 3+ years coding (academic & personal projects)</li>
+                        <li><strong>Educational Background:</strong> 3rd Year BS Computer Science Student, UCC</li>
+                        <li><strong>Skills:</strong>
+                            <div class="skills-list">
+                                <span class="skill">Python</span>
+                                <span class="skill">Java</span>
+                                <span class="skill">HTML</span>
+                                <span class="skill">CSS</span>
+                                <span class="skill">JavaScript</span>
+                                <span class="skill">C++</span>
+                                <span class="skill">Git</span>
+                                <span class="skill">Problem Solving</span>
+                            </div>
+                        </li>
+                    </ul>
+                    Welcome to my interactive main page!
+                </div>
+            </div>
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showSection('projects')">Projects</button>
+                <button class="nav-tab" onclick="showSection('hobbies')">Hobbies</button>
+                <button class="nav-tab" onclick="showSection('contact')">Contact</button>
+            </div>
+            <div id="projects" class="section-box active">
+                <strong>My Projects:</strong>
+                <ul class="projects-list">
+                    <li>Personal Portfolio Website</li>
+                    <li>Simple Chat Application (Python/Socket)</li>
+                    <li>Student Management System (Java)</li>
+                    <li>Mini Games in JavaScript</li>
+                </ul>
+            </div>
+            <div id="hobbies" class="section-box">
+                <strong>My Hobbies:</strong>
+                <ul class="hobbies-list">
+                    <li>Coding & Hackathons</li>
+                    <li>Playing Chess</li>
+                    <li>Listening to Music</li>
+                    <li>Exploring New Tech</li>
+                </ul>
+            </div>
+            <div id="contact" class="section-box">
+                <strong>Contact Me:</strong>
+                <div class="contact-info">
+                    Email: <a href="mailto:olivo@example.com" style="color:#4ec9b0;">olivo@example.com</a><br>
+                    GitHub: <a href="https://github.com/yourusername" target="_blank" style="color:#4ec9b0;">github.com/yourusername</a>
+                </div>
+            </div>
+            <!-- Portfolio Section -->
+            <div class="section-box active" id="portfolio" style="margin-top:1.5rem;">
+                <strong>Portfolio:</strong>
+                <div style="display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:1rem;">
+                    <div style="background:#23272e;border-radius:8px;padding:1rem;flex:1 1 220px;max-width:220px;text-align:center;border:1px solid #333;">
+                        <img src="project1.jpg" alt="Project 1" style="width:100%;height:140px;object-fit:cover;border-radius:6px;">
+                        <div style="margin-top:0.7rem;font-weight:bold;color:#4ec9b0;">Portfolio Website</div>
+                        <div style="font-size:0.95rem;color:#b5cea8;">A personal website to showcase my skills and projects.</div>
+                    </div>
+                    <div style="background:#23272e;border-radius:8px;padding:1rem;flex:1 1 220px;max-width:220px;text-align:center;border:1px solid #333;">
+                        <img src="project2.jpg" alt="Project 2" style="width:100%;height:140px;object-fit:cover;border-radius:6px;">
+                        <div style="margin-top:0.7rem;font-weight:bold;color:#4ec9b0;">Chat Application</div>
+                        <div style="font-size:0.95rem;color:#b5cea8;">A real-time chat app built with Python sockets.</div>
+                    </div>
+                    <div style="background:#23272e;border-radius:8px;padding:1rem;flex:1 1 220px;max-width:220px;text-align:center;border:1px solid #333;">
+                        <img src="project3.jpg" alt="Project 3" style="width:100%;height:140px;object-fit:cover;border-radius:6px;">
+                        <div style="margin-top:0.7rem;font-weight:bold;color:#4ec9b0;">Student Management</div>
+                        <div style="font-size:0.95rem;color:#b5cea8;">A Java system for managing student records.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Tab navigation
+        function showSection(section) {
+            document.querySelectorAll('.section-box').forEach(box => box.classList.remove('active'));
+            document.getElementById(section).classList.add('active');
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            const tabs = document.querySelectorAll('.nav-tab');
+            if (section === 'projects') tabs[0].classList.add('active');
+            if (section === 'hobbies') tabs[1].classList.add('active');
+            if (section === 'contact') tabs[2].classList.add('active');
+        }
+    </script>
+    <footer class="footer">
+        <div class="inner">
+            <div class="social-icons">
+                <a href="https://twitter.com/yourhandle" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <!-- Twitter SVG -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#1DA1F2" aria-hidden="true">
+                        <path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.27 4.27 0 0 0 1.88-2.36 8.6 8.6 0 0 1-2.72 1.04 4.26 4.26 0 0 0-7.27 3.89A12.08 12.08 0 0 1 3.15 4.9a4.25 4.25 0 0 0 1.32 5.68 4.22 4.22 0 0 1-1.93-.53v.05a4.26 4.26 0 0 0 3.42 4.18 4.28 4.28 0 0 1-1.92.07 4.26 4.26 0 0 0 3.98 2.96A8.54 8.54 0 0 1 2 19.54a12.05 12.05 0 0 0 6.53 1.91c7.83 0 12.11-6.49 12.11-12.11 0-.18-.01-.36-.02-.54A8.64 8.64 0 0 0 24 5.5a8.51 8.51 0 0 1-2.54.7z"/>
+                    </svg>
+                </a>
+                <a href="https://facebook.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                    <!-- Facebook SVG -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2" aria-hidden="true">
+                        <path d="M22 12.07C22 6.48 17.52 2 11.93 2S1.86 6.48 1.86 12.07C1.86 17.1 5.54 21.23 10.3 22v-7.01H7.69v-2.92h2.61V9.64c0-2.58 1.54-4 3.9-4 1.13 0 2.32.2 2.32.2v2.55h-1.31c-1.29 0-1.69.8-1.69 1.62v1.95h2.87l-.46 2.92h-2.41V22c4.76-.77 8.44-4.9 8.44-9.93z"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <!-- LinkedIn SVG -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#0A66C2" aria-hidden="true">
+                        <path d="M20.45 20.45h-3.55v-5.6c0-1.34-.03-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96v5.7H9.33V9h3.4v1.56h.05c.47-.9 1.62-1.87 3.34-1.87 3.57 0 4.23 2.35 4.23 5.4v6.36zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/>
+                    </svg>
+                </a>
+                <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <!-- Instagram SVG -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#E4405F" aria-hidden="true">
+                        <path d="M12 2.16c3.2 0 3.584.012 4.85.07 1.17.055 1.97.24 2.43.4.61.21 1.05.46 1.51.92.46.46.71.9.92 1.51.16.46.35 1.26.4 2.43.06 1.27.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.055 1.17-.24 1.97-.4 2.43-.21.61-.46 1.05-.92 1.51-.46.46-.9.71-1.51.92-.46.16-1.26.35-2.43.4-1.27.06-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.055-1.97-.24-2.43-.4a4.1 4.1 0 0 1-1.51-.92 4.1 4.1 0 0 1-.92-1.51c-.16-.46-.35-1.26-.4-2.43-.06-1.27-.07-1.65-.07-4.85s.012-3.584.07-4.85c.055-1.17.24-1.97.4-2.43.21-.61.46-1.05.92-1.51.46-.46.9-.71 1.51-.92.46-.16 1.26-.35 2.43-.4C8.416 2.172 8.8 2.16 12 2.16m0-2.16C8.735 0 8.332.012 7.052.07 5.771.129 4.77.325 3.95.63c-.86.32-1.59.75-2.31 1.47C.918 2.82.493 3.55.17 4.41.33 5.23.13 6.23.07 7.51.012 8.79 0 9.193 0 12.46c0 3.267.012 3.67.07 4.95.059 1.28.255 2.28.56 3.1.32.86.75 1.59 1.47 2.31.73.73 1.45 1.15 2.31 1.47.82.3 1.82.5 3.1.56 1.28.06 1.69.07 4.95.07s3.67-.012 4.95-.07c1.28-.059 2.28-.255 3.1-.56.86-.32 1.59-.75 2.31-1.47.73-.73 1.15-1.45 1.47-2.31.3-.82.5-1.82.56-3.1.06-1.28.07-1.69.07-4.95s-.012-3.67-.07-4.95c-.059-1.28-.255-2.28-.56-3.1-.32-.86-.75-1.59-1.47-2.31C21.18.918 20.45.493 19.59.17c-.82-.3-1.82-.5-3.1-.56C15.21.012 14.807 0 11.54 0h-.08z"/>
+                        <path d="M12 5.84A6.16 6.16 0 1 0 18.16 12 6.15 6.15 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4z"/>
+                        <circle cx="18.4" cy="5.6" r="1.44"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="legal-links">
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+                <a href="faq.html">FAQs</a>
+                <a href="help.html">Help</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
