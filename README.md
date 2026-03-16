@@ -1,2 +1,2 @@
 # MidtermsProject
-***FOR MIDTERMS ONLY - WEBDEV2***
+***FOR MIDTERMS ONLY***
